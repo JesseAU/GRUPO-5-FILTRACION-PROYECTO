@@ -1,0 +1,20 @@
+{
+  "name": "grupo-5-filtracion-proyecto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"✅ Todo bien (test simulado)\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JesseAU/GRUPO-5-FILTRACION-PROYECTO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JesseAU/GRUPO-5-FILTRACION-PROYECTO/issues"
+  },
+  "homepage": "https://github.com/JesseAU/GRUPO-5-FILTRACION-PROYECTO#readme"
+}
