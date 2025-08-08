@@ -1,25 +1,46 @@
-name: Node.js CI
+name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - name: 📥 Clonar repositorio
+        uses: actions/checkout@v3
 
-    - name: Usar Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: 📂 Verificar existencia de archivos requeridos
+        run: |
+          echo "Verificando archivos..."
+          for file in index.html style.css script.js; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Falta el archivo $file"
+              exit 1
+            fi
+          done
+          echo "✅ Todos los archivos existen."
 
-    - name: Instalar dependencias
-      run: npm install
+      - name: 🔍 Validar HTML
+        run: |
+          echo "Validando HTML..."
+          npm install -g htmlhint
+          htmlhint index.html
 
-    - name: Ejecutar tests
-      run: npm test
+      - name: 🎨 Validar CSS
+        run: |
+          echo "Validando CSS..."
+          npm install -g stylelint
+          stylelint "**/*.css"
+
+      - name: 💻 Validar JS
+        run: | 
+          echo "Validando JavaScript..."
+          npm install -g eslint
+          eslint "**/*.js"
