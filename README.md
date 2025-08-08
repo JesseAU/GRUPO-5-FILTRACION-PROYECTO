@@ -18,7 +18,9 @@
 | Product Owner | Juan Carlos Solis           | Define el objetivo, prioriza tareas              |
 | Developer 1   | Kevin Yupanqui      | Crea el diseño en HTML + CSS                     |
 | Developer 2   | Daniel Torres          | Programa validaciones con JS                     |
-| Developer 3   | Eduard de la Cruz y Rossy Quispe       |   YAML Github Actions                           |
+| Developer 3   | Eduard de la Cruz       |   YAML Github Actions   
+| Developer 4  | Rossy Quispe         | README                     | 
+
 
 ---
 ## 📋 Sprint Backlog (Trello)
@@ -67,7 +69,8 @@
 
 **3. Limpiar espacios innecesarios.**
 
-**4. Etiquetas: Validación, UX, Prioridad Media**
+### Etiquetas: 
+**Validación, UX, Prioridad Media**
 
 ---
 
