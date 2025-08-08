@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtro de Números</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Filtro de Números Pares e Impares</h1>
+
+  <form id="formNumeros">
+    <label for="numeros">Ingresa el numero:</label>
+    <input type="text" id="numeros" placeholder="Ej: 1,2,3,4">
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <div id="resultado">
+    <p><strong>Pares:</strong> <span id="pares"></span></p>
+    <p><strong>Impares:</strong> <span id="impares"></span></p>
+    <p><strong>Suma total:</strong> <span id="suma"></span></p>
+  </div>
+
+  <script src="logica.js"></script>
+  
+</body>
+</html>
