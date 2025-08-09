@@ -1,0 +1,55 @@
+name: "CI - Validación de funcionalidad"
+
+on:
+  push:
+    branches:
+      - main
+      - "logica-filtro(JS)"
+  pull_request:
+    branches:
+      - main
+      - "logica-filtro(JS)"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "📥 Clonar repositorio"
+        uses: actions/checkout@v3
+
+      - name: "⚙️ Instalar validadores"
+        run: |
+          npm install -g htmlhint stylelint stylelint-config-standard eslint
+          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+
+      # Validar HTML (solo en main)
+      - name: "✅ Validar HTML"
+        if: github.ref == 'refs/heads/main'
+        run: htmlhint "**/*.html"
+
+      # Validar CSS (solo en main)
+      - name: "🎨 Validar CSS"
+        if: github.ref == 'refs/heads/main'
+        run: stylelint "**/*.css"
+
+      # Validar JavaScript
+      - name: "🛠️ Validar JavaScript"
+        run: |
+          if [ "${GITHUB_REF##*/}" = "logica-filtro(JS)" ]; then
+            echo "🔍 Validando solo script.js..."
+            eslint "script.js"
+          else
+            echo "🔍 Validando todos los .js..."
+            eslint "script.js"
+          fi
+
+      # Mensaje final si todo OK
+      - name: "🎉 Todo correcto"
+        if: ${{ success() }}
+        run: echo "✅ Validación completada correctamente."
+
+      # Mensaje si hay errores
+      - name: "🚨 Error encontrado"
+        if: ${{ failure() }}
+        run: echo "❌ Se encontraron errores en la validación."
