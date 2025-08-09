@@ -3,13 +3,13 @@ name: Validar Interfaz Usuario
 on:
   push:
     branches:
-      - interfaz-usuario
+      - interfaz-usuario(diseño)
     paths:
       - 'index.html'
       - 'style.css'
   pull_request:
     branches:
-      - interfaz-usuario
+      - interfaz-usuario(diseño)
     paths:
       - 'index.html'
       - 'style.css'
