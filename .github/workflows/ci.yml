@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+      - 'interzas-usuario(diseño)'
+      - 'logica-filtro(JS)'
   pull_request:
     branches:
       - main
+      - 'interzas-usuario(diseño)'
+      - 'logica-filtro(JS)'
 
 jobs:
   validate:
@@ -16,31 +20,49 @@ jobs:
       - name: 📥 Clonar repositorio
         uses: actions/checkout@v3
 
-      - name: 📂 Verificar existencia de archivos requeridos
+      - name: 📂 Verificar existencia de archivos según la rama
         run: |
-          echo "Verificando archivos..."
-          for file in index.html style.css script.js; do
+          echo "Detectando rama: $GITHUB_REF_NAME"
+          
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            files="index.html style.css script.js"
+          elif [ "$GITHUB_REF_NAME" = "interzas-usuario(diseño)" ]; then
+            files="index.html style.css"
+          elif [ "$GITHUB_REF_NAME" = "logica-filtro(JS)" ]; then
+            files="script.js"
+          else
+            echo "❌ Rama no configurada para validación"
+            exit 1
+          fi
+          
+          for file in $files; do
             if [ ! -f "$file" ]; then
               echo "❌ Falta el archivo $file"
               exit 1
             fi
           done
-          echo "✅ Todos los archivos existen."
+          echo "✅ Archivos requeridos encontrados."
 
       - name: 🔍 Validar HTML
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interzas-usuario(diseño)' }}
         run: |
           echo "Validando HTML..."
           npm install -g htmlhint
           htmlhint index.html
 
       - name: 🎨 Validar CSS
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interzas-usuario(diseño)' }}
         run: |
           echo "Validando CSS..."
           npm install -g stylelint
           stylelint "**/*.css"
 
       - name: 💻 Validar JS
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' }}
         run: | 
           echo "Validando JavaScript..."
           npm install -g eslint
           eslint "**/*.js"
+
+      - name: 🎉 Mensaje final
+        run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo equipo! 🚀"
