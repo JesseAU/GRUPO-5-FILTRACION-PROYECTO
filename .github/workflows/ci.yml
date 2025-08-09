@@ -6,11 +6,13 @@ on:
       - main
       - 'interfaz-usuario(diseño)'
       - 'logica-filtro(JS)'
+      - 'CI-github-actions'  
   pull_request:
     branches:
       - main
       - 'interfaz-usuario(diseño)'
       - 'logica-filtro(JS)'
+      - 'CI-github-actions'
 
 jobs:
   validate:
@@ -30,6 +32,8 @@ jobs:
             files="index.html style.css"
           elif [ "$GITHUB_REF_NAME" = "logica-filtro(JS)" ]; then
             files="script.js"
+          elif [ "$GITHUB_REF_NAME" = "CI-github-actions" ]; then
+            files="index.html style.css script.js"  # ✅ regla para tu rama
           else
             echo "❌ Rama no configurada para validación"
             exit 1
@@ -44,21 +48,21 @@ jobs:
           echo "✅ Archivos requeridos encontrados."
 
       - name: 🔍 Validar HTML
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' }}
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
         run: |
           echo "Validando HTML..."
           npm install -g htmlhint
           htmlhint index.html
 
       - name: 🎨 Validar CSS
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' }}
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
         run: |
           echo "Validando CSS..."
           npm install -g stylelint
           stylelint "style.css"
 
       - name: 💻 Validar JS
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' }}
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' || github.ref_name == 'CI-github-actions' }}
         run: | 
           echo "Validando JavaScript..."
           npm install -g eslint
