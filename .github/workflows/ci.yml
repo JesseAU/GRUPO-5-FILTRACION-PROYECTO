@@ -1,68 +1,56 @@
-name: CI
+name: "CI - Validación Frontend"
 
 on:
   push:
     branches:
       - main
-      - 'interfaz-usuario(diseño)'
-      - 'logica-filtro(JS)'
+      - "interfaz-usuario(diseño)"
+      - "logica-filtro(JS)"
   pull_request:
     branches:
       - main
-      - 'interfaz-usuario(diseño)'
-      - 'logica-filtro(JS)'
+      - "interfaz-usuario(diseño)"
+      - "logica-filtro(JS)"
 
 jobs:
   validate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clonar repositorio
+      - name: "📥 Clonar repositorio"
         uses: actions/checkout@v3
 
-      - name: 📂 Verificar existencia de archivos según la rama
+      # Instalación de herramientas de validación
+      - name: "⚙️ Instalar validadores"
         run: |
-          echo "Detectando rama: $GITHUB_REF_NAME"
-          
-          if [ "$GITHUB_REF_NAME" = "main" ]; then
-            files="index.html style.css script.js"
-          elif [ "$GITHUB_REF_NAME" = "interfaz-usuario(diseño)" ]; then
-            files="index.html style.css"
-          elif [ "$GITHUB_REF_NAME" = "logica-filtro(JS)" ]; then
-            files="script.js"
-          else
-            echo "❌ Rama no configurada para validación"
-            exit 1
-          fi
-          
-          for file in $files; do
-            if [ ! -f "$file" ]; then
-              echo "❌ Falta el archivo $file"
-              exit 1
-            fi
-          done
-          echo "✅ Archivos requeridos encontrados."
+          npm install -g htmlhint stylelint eslint
 
-      - name: 🔍 Validar HTML
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' }}
+      # Validar HTML (solo si la rama es main o interfaz-usuario(diseño))
+      - name: "✅ Validar HTML"
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/interfaz-usuario(diseño)'
         run: |
-          echo "Validando HTML..."
-          npm install -g htmlhint
-          htmlhint index.html
+          echo "🔍 Validando HTML..."
+          htmlhint "**/*.html"
 
-      - name: 🎨 Validar CSS
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' }}
+      # Validar CSS (solo si la rama es main o interfaz-usuario(diseño))
+      - name: "🎨 Validar CSS"
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/interfaz-usuario(diseño)'
         run: |
-          echo "Validando CSS..."
-          npm install -g stylelint
-          stylelint style.css
+          echo "🔍 Validando CSS..."
+          stylelint "**/*.css"
 
-      - name: 💻 Validar JS
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' }}
-        run: | 
-          echo "Validando JavaScript..."
-          npm install -g eslint
+      # Validar JavaScript (solo si la rama es main o logica-filtro(JS))
+      - name: "🛠️ Validar JavaScript"
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/logica-filtro(JS)'
+        run: |
+          echo "🔍 Validando JavaScript..."
           eslint "**/*.js"
 
-      - name: 🎉 Mensaje final
-        run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo equipo! 🚀"
+      # Mensaje final
+      - name: "🎉 Todo correcto"
+        if: ${{ success() }}
+        run: echo "✅ Validación completada correctamente."
+
+      - name: "🚨 Error encontrado"
+        if: ${{ failure() }}
+        run: echo "❌ Se encontraron errores en la validación."
