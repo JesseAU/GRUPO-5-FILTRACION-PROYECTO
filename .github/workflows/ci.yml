@@ -81,4 +81,4 @@ jobs:
           eslint "script.js"
 
       - name: 🎉 Mensaje final
-        run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo equipo! 🚀"
+        run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo grupo 5! 🚀"
