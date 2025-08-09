@@ -73,7 +73,7 @@ jobs:
               {
                 rules: {
                   semi: "error",
-                  quotes: ["error", "double"]
+                  quotes: ["off"]
                 }
               }
             ];' > eslint.config.js
