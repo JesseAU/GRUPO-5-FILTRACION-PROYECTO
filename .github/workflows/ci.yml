@@ -1,56 +1,84 @@
-name: "CI - Validación Frontend"
+name: CI
 
 on:
   push:
     branches:
       - main
-      - "interfaz-usuario(diseño)"
-      - "logica-filtro(JS)"
+      - 'interfaz-usuario(diseño)'
+      - 'logica-filtro(JS)'
+      - 'CI-github-actions'
   pull_request:
     branches:
       - main
-      - "interfaz-usuario(diseño)"
-      - "logica-filtro(JS)"
+      - 'interfaz-usuario(diseño)'
+      - 'logica-filtro(JS)'
+      - 'CI-github-actions'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "📥 Clonar repositorio"
+      - name: 📥 Clonar repositorio
         uses: actions/checkout@v3
 
-      # Instalación de herramientas de validación
-      - name: "⚙️ Instalar validadores"
+      - name: 📂 Verificar existencia de archivos según la rama
         run: |
-          npm install -g htmlhint stylelint eslint
+          echo "Detectando rama: $GITHUB_REF_NAME"
+          
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            files="index.html style.css script.js"
+          elif [ "$GITHUB_REF_NAME" = "interfaz-usuario(diseño)" ]; then
+            files="index.html style.css"
+          elif [ "$GITHUB_REF_NAME" = "logica-filtro(JS)" ]; then
+            files="script.js"
+          elif [ "$GITHUB_REF_NAME" = "CI-github-actions" ]; then
+            files="index.html style.css script.js"
+          else
+            echo "❌ Rama no configurada para validación"
+            exit 1
+          fi
+          
+          for file in $files; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Falta el archivo $file"
+              exit 1
+            fi
+          done
+          echo "✅ Archivos requeridos encontrados."
 
-      # Validar HTML (solo si la rama es main o interfaz-usuario(diseño))
-      - name: "✅ Validar HTML"
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/interfaz-usuario(diseño)'
+      - name: 🔍 Validar HTML
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
         run: |
-          echo "🔍 Validando HTML..."
-          htmlhint "**/*.html"
+          echo "Validando HTML..."
+          npm install -g htmlhint
+          htmlhint index.html
 
-      # Validar CSS (solo si la rama es main o interfaz-usuario(diseño))
-      - name: "🎨 Validar CSS"
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/interfaz-usuario(diseño)'
+      - name: 🎨 Validar CSS (con archivo temporal)
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
         run: |
-          echo "🔍 Validando CSS..."
-          stylelint "**/*.css"
+          echo "Validando CSS..."
+          npm install -g stylelint stylelint-config-standard
+          echo '{ "extends": "stylelint-config-standard", "rules": { "block-no-empty": true, "color-no-invalid-hex": true } }' > .stylelintrc.json
+          stylelint "style.css"
 
-      # Validar JavaScript (solo si la rama es main o logica-filtro(JS))
-      - name: "🛠️ Validar JavaScript"
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/logica-filtro(JS)'
+      - name: 💻 Validar JS (compatible ESLint v9+)
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' || github.ref_name == 'CI-github-actions' }}
         run: |
-          echo "🔍 Validando JavaScript..."
-          eslint "**/*.js"
+          echo "Validando JavaScript..."
+          npm install -g eslint
+          if [ ! -f eslint.config.js ]; then
+            echo "Creando eslint.config.js por defecto..."
+            echo 'export default [
+              {
+                rules: {
+                  semi: "error",
+                  quotes: ["off"]
+                }
+              }
+            ];' > eslint.config.js
+          fi
+          eslint "script.js"
 
-      # Mensaje final
-      - name: "🎉 Todo correcto"
-        if: ${{ success() }}
-        run: echo "✅ Validación completada correctamente."
-
-      - name: "🚨 Error encontrado"
-        if: ${{ failure() }}
-        run: echo "❌ Se encontraron errores en la validación."
+      - name: 🎉 Mensaje final
+        run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo equipo! 🚀"
