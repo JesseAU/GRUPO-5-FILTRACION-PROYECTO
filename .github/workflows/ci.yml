@@ -1,73 +1,51 @@
-name: CI
+name: Validación de de pruebas
 
 on:
   push:
     branches:
-      - main
-      - 'interfaz-usuario(diseño)'
-      - 'logica-filtro(JS)'
-      - 'CI-github-actions' 
-  pull_request:
-    branches:
-      - main
-      - 'interfaz-usuario(diseño)'
-      - 'logica-filtro(JS)'
-      - 'CI-github-actions' 
+      - interfaz-usuario
+      - logica-filtro
 
 jobs:
-  validate:
+  validar:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Clonar repositorio
+      - name: 📂 Clonando el repositorio
         uses: actions/checkout@v3
 
-      - name: 📂 Verificar existencia de archivos según la rama
+      - name: 📄 Verificando existencia de archivos
         run: |
-          echo "Detectando rama: $GITHUB_REF_NAME"
-          
-          if [ "$GITHUB_REF_NAME" = "main" ]; then
-            files="index.html style.css script.js"
-          elif [ "$GITHUB_REF_NAME" = "interfaz-usuario(diseño)" ]; then
-            files="index.html style.css"
-          elif [ "$GITHUB_REF_NAME" = "logica-filtro(JS)" ]; then
-            files="script.js"
-          elif [ "$GITHUB_REF_NAME" = "CI-github-actions" ]; then
-            files="index.html style.css script.js"
-          else
-            echo "❌ Rama no configurada para validación"
+          echo "🔍 Verificando archivos..."
+          if [ ! -f index.html ]; then
+            echo "❌ Falta el archivo index.html"
             exit 1
           fi
-          
-          for file in $files; do
-            if [ ! -f "$file" ]; then
-              echo "❌ Falta el archivo $file"
-              exit 1
-            fi
-          done
-          echo "✅ Archivos requeridos encontrados."
+          if [ ! -f style.css ]; then
+            echo "❌ Falta el archivo style.css"
+            exit 1
+          fi
+          if [ ! -f script.js ]; then
+            echo "❌ Falta el archivo script.js"
+            exit 1
+          fi
+          echo "✅ Todos los archivos están presentes"
 
-      - name: 🔍 Validar HTML
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
+      - name: 🎨 Validando CSS
+        uses: stylelint/stylelint-action@v1
+        with:
+          files: "**/*.css"
+
+      - name: 🛠 Instalando dependencias para JS
         run: |
-          echo "Validando HTML..."
-          npm install -g htmlhint
-          htmlhint index.html
+          echo "📦 Instalando dependencias..."
+          npm install eslint
 
-      - name: 🎨 Validar CSS (con archivo temporal)
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
+      - name: 📜 Creando configuración ESLint por defecto
         run: |
-          echo "Validando CSS..."
-          npm install -g stylelint stylelint-config-standard
-          echo '{ "extends": "stylelint-config-standard", "rules": { "block-no-empty": true, "color-no-invalid-hex": true } }' > .stylelintrc.json
-          stylelint "style.css"
+          echo "module.exports = { env: { browser: true, es2021: true }, extends: 'eslint:recommended', parserOptions: { ecmaVersion: 'latest', sourceType: 'module' }, rules: {} };" > eslint.config.js
 
-      - name: 💻 Validar JS
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' || github.ref_name == 'CI-github-actions' }}
-        run: | 
-          echo "Validando JavaScript..."
-          npm install -g eslint
-          eslint "script.js"
-
-      - name: 🎉 Mensaje final
-        run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo equipo! 🚀"
+      - name: ⚡ Validando JavaScript
+        run: |
+          echo "🚀 Validando JavaScript..."
+          npx eslint script.js || (echo '❌ Errores encontrados en JavaScript' && exit 1)
+          echo "✅ JavaScript validado correctamente"
