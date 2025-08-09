@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - main
-      - 'interzas-usuario(diseño)'
+      - 'interfaz-usuario(diseño)'
       - 'logica-filtro(JS)'
   pull_request:
     branches:
       - main
-      - 'interzas-usuario(diseño)'
+      - 'interfaz-usuario(diseño)'
       - 'logica-filtro(JS)'
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
           
           if [ "$GITHUB_REF_NAME" = "main" ]; then
             files="index.html style.css script.js"
-          elif [ "$GITHUB_REF_NAME" = "interzas-usuario(diseño)" ]; then
+          elif [ "$GITHUB_REF_NAME" = "interfaz-usuario(diseño)" ]; then
             files="index.html style.css"
           elif [ "$GITHUB_REF_NAME" = "logica-filtro(JS)" ]; then
             files="script.js"
@@ -44,14 +44,14 @@ jobs:
           echo "✅ Archivos requeridos encontrados."
 
       - name: 🔍 Validar HTML
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interzas-usuario(diseño)' }}
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' }}
         run: |
           echo "Validando HTML..."
           npm install -g htmlhint
           htmlhint index.html
 
       - name: 🎨 Validar CSS
-        if: ${{ github.ref_name == 'main' || github.ref_name == 'interzas-usuario(diseño)' }}
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' }}
         run: |
           echo "Validando CSS..."
           npm install -g stylelint
