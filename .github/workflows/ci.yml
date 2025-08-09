@@ -1,10 +1,9 @@
-name: Validación de de pruebas
+name: Validación de pruebas
 
 on:
   push:
     branches:
-      - interfaz-usuario
-      - logica-filtro
+      - CI-github-actions
 
 jobs:
   validar:
@@ -28,24 +27,25 @@ jobs:
             echo "❌ Falta el archivo script.js"
             exit 1
           fi
-          echo "✅ Todos los archivos están presentes"
+          echo "✅ Todos los archivos están presentes 🎉"
 
-      - name: 🎨 Validando CSS
+      - name: 🎨 Validando CSS con estilo 😎
         uses: stylelint/stylelint-action@v1
         with:
           files: "**/*.css"
 
       - name: 🛠 Instalando dependencias para JS
         run: |
-          echo "📦 Instalando dependencias..."
+          echo "📦 Instalando dependencias mágicas..."
           npm install eslint
 
       - name: 📜 Creando configuración ESLint por defecto
         run: |
+          echo "✨ Creando configuración ESLint..."
           echo "module.exports = { env: { browser: true, es2021: true }, extends: 'eslint:recommended', parserOptions: { ecmaVersion: 'latest', sourceType: 'module' }, rules: {} };" > eslint.config.js
 
       - name: ⚡ Validando JavaScript
         run: |
           echo "🚀 Validando JavaScript..."
-          npx eslint script.js || (echo '❌ Errores encontrados en JavaScript' && exit 1)
-          echo "✅ JavaScript validado correctamente"
+          npx eslint script.js || (echo '❌ Errores encontrados en JavaScript. 💔' && exit 1)
+          echo "✅ JavaScript validado correctamente 💖"
