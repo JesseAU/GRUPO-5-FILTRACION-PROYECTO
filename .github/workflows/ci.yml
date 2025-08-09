@@ -34,7 +34,9 @@ jobs:
             "parserOptions": {
               "ecmaVersion": 12
             },
-            "rules": {}
+            "rules": {
+              "no-unused-vars": "warn"
+            }
           }' > .eslintrc.json
 
       - name: "📝 Crear configuración Stylelint"
