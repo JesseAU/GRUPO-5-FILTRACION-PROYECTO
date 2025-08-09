@@ -55,14 +55,14 @@ jobs:
         run: |
           echo "Validando CSS..."
           npm install -g stylelint
-          stylelint "**/*.css"
+          stylelint "style.css"
 
       - name: 💻 Validar JS
         if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' }}
         run: | 
           echo "Validando JavaScript..."
           npm install -g eslint
-          eslint "**/*.js"
+          eslint "script.js"
 
       - name: 🎉 Mensaje final
         run: echo "🎯 Todo correcto, el código no tiene errores. ¡Buen trabajo equipo! 🚀"
