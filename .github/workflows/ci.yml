@@ -20,37 +20,39 @@ jobs:
       - name: "📥 Clonar repositorio"
         uses: actions/checkout@v3
 
-      # Instalación de herramientas de validación
+      # Instalación de herramientas y configs necesarias
       - name: "⚙️ Instalar validadores"
         run: |
-          npm install -g htmlhint stylelint eslint
+          npm install -g htmlhint stylelint stylelint-config-standard eslint
+          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
 
-      # Validar HTML (solo si la rama es main o interfaz-usuario(diseño))
+      # Validar HTML (main o interfaz-usuario)
       - name: "✅ Validar HTML"
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/interfaz-usuario(diseño)'
         run: |
           echo "🔍 Validando HTML..."
           htmlhint "**/*.html"
 
-      # Validar CSS (solo si la rama es main o interfaz-usuario(diseño))
+      # Validar CSS (main o interfaz-usuario)
       - name: "🎨 Validar CSS"
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/interfaz-usuario(diseño)'
         run: |
           echo "🔍 Validando CSS..."
           stylelint "**/*.css"
 
-      # Validar JavaScript (solo si la rama es main o logica-filtro(JS))
+      # Validar JavaScript (main o logica-filtro)
       - name: "🛠️ Validar JavaScript"
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/logica-filtro(JS)'
         run: |
           echo "🔍 Validando JavaScript..."
           eslint "**/*.js"
 
-      # Mensaje final
+      # Mensaje final si todo OK
       - name: "🎉 Todo correcto"
         if: ${{ success() }}
         run: echo "✅ Validación completada correctamente."
 
+      # Mensaje si hay errores
       - name: "🚨 Error encontrado"
         if: ${{ failure() }}
         run: echo "❌ Se encontraron errores en la validación."
