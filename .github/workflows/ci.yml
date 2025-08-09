@@ -21,7 +21,7 @@ jobs:
       - name: "⚙️ Instalar dependencias"
         run: |
           npm init -y
-          npm install --save-dev eslint htmlhint stylelint stylelint-config-standard
+          npm install --save-dev eslint@8 htmlhint stylelint stylelint-config-standard
 
       - name: "📝 Crear configuración ESLint"
         run: |
@@ -43,12 +43,14 @@ jobs:
             "extends": "stylelint-config-standard"
           }' > .stylelintrc.json
 
+      - name: "📝 Crear configuración Htmlhint"
+        run: |
+          echo '{"htmlhint": {"tagname-lowercase": true, "attr-lowercase": true}}' > .htmlhintrc
+
       # Validar HTML solo en main
       - name: "✅ Validar HTML"
         if: github.ref == 'refs/heads/main'
-        run: |
-          echo '{"htmlhint": {"tagname-lowercase": true, "attr-lowercase": true}}' > .htmlhintrc
-          npx htmlhint "**/*.html"
+        run: npx htmlhint "**/*.html"
 
       # Validar CSS solo en main
       - name: "🎨 Validar CSS"
