@@ -18,38 +18,58 @@ jobs:
       - name: "📥 Clonar repositorio"
         uses: actions/checkout@v3
 
-      - name: "⚙️ Instalar validadores"
+      - name: "⚙️ Instalar dependencias"
         run: |
-          npm install -g htmlhint stylelint stylelint-config-standard eslint
-          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+          npm init -y
+          npm install --save-dev eslint htmlhint stylelint stylelint-config-standard
 
-      # Validar HTML (solo en main)
+      - name: "📝 Crear configuración ESLint"
+        run: |
+          echo '{
+            "env": {
+              "browser": true,
+              "es2021": true
+            },
+            "extends": "eslint:recommended",
+            "parserOptions": {
+              "ecmaVersion": 12
+            },
+            "rules": {}
+          }' > .eslintrc.json
+
+      - name: "📝 Crear configuración Stylelint"
+        run: |
+          echo '{
+            "extends": "stylelint-config-standard"
+          }' > .stylelintrc.json
+
+      # Validar HTML solo en main
       - name: "✅ Validar HTML"
         if: github.ref == 'refs/heads/main'
-        run: htmlhint "**/*.html"
+        run: |
+          echo '{"htmlhint": {"tagname-lowercase": true, "attr-lowercase": true}}' > .htmlhintrc
+          npx htmlhint "**/*.html"
 
-      # Validar CSS (solo en main)
+      # Validar CSS solo en main
       - name: "🎨 Validar CSS"
         if: github.ref == 'refs/heads/main'
-        run: stylelint "**/*.css"
+        run: npx stylelint "**/*.css"
 
-      # Validar JavaScript
+      # Validar JS
       - name: "🛠️ Validar JavaScript"
         run: |
           if [ "${GITHUB_REF##*/}" = "logica-filtro(JS)" ]; then
             echo "🔍 Validando solo script.js..."
-            eslint "script.js"
+            npx eslint "script.js"
           else
-            echo "🔍 Validando todos los .js..."
-            eslint "script.js"
+            echo "🔍 Validando todos los archivos JS..."
+            npx eslint "script.js"
           fi
 
-      # Mensaje final si todo OK
       - name: "🎉 Todo correcto"
         if: ${{ success() }}
         run: echo "✅ Validación completada correctamente."
 
-      # Mensaje si hay errores
       - name: "🚨 Error encontrado"
         if: ${{ failure() }}
         run: echo "❌ Se encontraron errores en la validación."
