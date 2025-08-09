@@ -6,13 +6,13 @@ on:
       - main
       - 'interfaz-usuario(diseño)'
       - 'logica-filtro(JS)'
-      - 'CI-github-actions'
+      - 'CI-github-actions' 
   pull_request:
     branches:
       - main
       - 'interfaz-usuario(diseño)'
       - 'logica-filtro(JS)'
-      - 'CI-github-actions'
+      - 'CI-github-actions' 
 
 jobs:
   validate:
@@ -54,12 +54,13 @@ jobs:
           npm install -g htmlhint
           htmlhint index.html
 
-      - name: 🎨 Validar CSS (sin archivo de configuración)
+      - name: 🎨 Validar CSS (con archivo temporal)
         if: ${{ github.ref_name == 'main' || github.ref_name == 'interfaz-usuario(diseño)' || github.ref_name == 'CI-github-actions' }}
         run: |
           echo "Validando CSS..."
-          npm install -g stylelint
-          npx stylelint "style.css" --config '{"extends": "stylelint-config-standard", "rules": { "block-no-empty": true, "color-no-invalid-hex": true }}'
+          npm install -g stylelint stylelint-config-standard
+          echo '{ "extends": "stylelint-config-standard", "rules": { "block-no-empty": true, "color-no-invalid-hex": true } }' > .stylelintrc.json
+          stylelint "style.css"
 
       - name: 💻 Validar JS
         if: ${{ github.ref_name == 'main' || github.ref_name == 'logica-filtro(JS)' || github.ref_name == 'CI-github-actions' }}
