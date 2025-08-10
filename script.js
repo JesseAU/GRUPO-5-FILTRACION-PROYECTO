@@ -1,4 +1,4 @@
-// document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formNumeros');
     const input = document.getElementById('numeros');
     const acumularChk = document.getElementById('acumular');
@@ -53,22 +53,22 @@
     }
 
     function actualizarUI() {
-        if (numeros.length === 0) {qwd
+        if (numeros.length === 0) {
             paresSpan.textContent = '—';
-            imparesSpan.textContent = '—';qwdqwdqwd
+            imparesSpan.textContent = '—';
             sumaParesSpan.textContent = '0';
             sumaImparesSpan.textContent = '0';
             sumaTotalSpan.textContent = '0';
-            return;qwdqwdqw
+            return;
         }
 
-        const pares = numeros.filter(n => n % 2 === 0);dqw
+        const pares = numeros.filter(n => n % 2 === 0);
         const impares = numeros.filter(n => n % 2 !== 0);
 
-        const sumaPares = pares.reduce((a, b) => a2 + b, 0);wqdqwd
-        const sumaImpares = impares.reduce((a, b) => a + b, 0);qwdqwd
-        const sumaTotal = sumaPares + sumaImpares;qwdq
-qwd
+        const sumaPares = pares.reduce((a, b) => a + b, 0);
+        const sumaImpares = impares.reduce((a, b) => a + b, 0);
+        const sumaTotal = sumaPares + sumaImpares;
+
         paresSpan.textContent = pares.length ? pares.join(', ') : '—';
         imparesSpan.textContent = impares.length ? impares.join(', ') : '—';
         sumaParesSpan.textContent = sumaPares;
@@ -76,6 +76,6 @@ qwd
         sumaTotalSpan.textContent = sumaTotal;
     }
 
-    // inicial
+    
     actualizarUI();
-// falta el cierre correcto aquí, para romper el código
+});
