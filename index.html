@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filtro de Números</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filtro de Números</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+    <h1>Filtro de Números Pares e Impares</h1>
 
-  <h1>Filtro de Números Pares e Impares</h1>
+    <form id="formNumeros">
+        <label for="numeros">Ingresa los números (separados por comas, espacios o ;):</label>
+        <input type="text" id="numeros" placeholder="Ej: 1, 2, 3, 4" />
 
-  <form id="formNumeros">
-    <label for="numeros">Ingresa el numero:</label>
-    <input type="text" id="numeros" placeholder="Ej: 1,2,3,4">
-    <button type="submit">Filtrar</button>
-  </form>
+        <label class="check">
+            <input type="checkbox" id="acumular" />
+            Acumular en pruebas encadenadas
+        </label>
 
-  <div id="resultado">
-    <p><strong>Pares:</strong> <span id="pares"></span></p>
-    <p><strong>Impares:</strong> <span id="impares"></span></p>
-    <p><strong>Suma total:</strong> <span id="suma"></span></p>
-  </div>
+        <div class="buttons">
+            <button type="submit">Filtrar</button>
+            <button type="button" id="limpiar">Limpiar</button>
+        </div>
+    </form>
 
-  <script src="logica.js"></script>
-  
+    <div id="resultado">
+        <p><strong>Pares:</strong> <span id="pares">—</span> <small>(suma: <span id="sumaPares">0</span>)</small></p>
+        <p><strong>Impares:</strong> <span id="impares">—</span> <small>(suma: <span id="sumaImpares">0</span>)</small>
+        </p>
+        <p><strong>Suma total:</strong> <span id="sumaTotal">0</span></p>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
