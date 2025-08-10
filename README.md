@@ -119,7 +119,7 @@
 ## 📌 EVIDENCIAS DE SPRINT Y  SCRUM
 
 ### SPRINT PLANNING
-**Definimos el sprint goal con ayuda de product ouwner**
+**Definimos el sprint goal con ayuda de product owner**
 
 **Se armo el tablero trello**
 
