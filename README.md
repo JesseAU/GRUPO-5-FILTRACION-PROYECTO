@@ -125,6 +125,32 @@
 
 --- 
 
+## 🛠 Tecnologías Usadas
+
+**HTML5**
+
+**CSS3**
+
+**JavaScript**
+
+**Git & GitHub**
+
+---
+## 📌 Próximas mejoras (Roadmap)
+
+**Agregar historial de filtrados.**
+
+**Implementar más opciones de formato de entrada.**
+
+---
+
+## LINK DE PAGINA WEB
+
+
+---
+
+## LINK DE TRELLO
+
 
 
 
