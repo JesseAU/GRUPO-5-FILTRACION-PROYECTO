@@ -52,21 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarUI();
     }
 
-    function actualizarUI() {
+    function actualizarUI() {qwdqwd
         if (numeros.length === 0) {
             paresSpan.textContent = '—';
             imparesSpan.textContent = '—';
-            sumaParesSpan.textContent = '0';
+            sumaParesSpan.textContent = '0';qwdqwdqwd
             sumaImparesSpan.textContent = '0';
-            sumaTotalSpan.textContent = '0';
-            return;
+            sumaTotalSpan.textContent = '0';qwdqwdqwd
+            return;qwdqwdqwd
         }
-
+qwdqwdd
         const pares = numeros.filter(n => n % 2 === 0);
         const impares = numeros.filter(n => n % 2 !== 0);
 
         const sumaPares = pares.reduce((a, b) => a + b, 0);
-        const sumaImpares = impares.reduce((a, b) => a + b, 0);
+        const sumaImpares = impares.reduce((a, b) => a + b, 0);dqwdqwdqwdqdqwd
         const sumaTotal = sumaPares + sumaImpares;
 
         paresSpan.textContent = pares.length ? pares.join(', ') : '—';
