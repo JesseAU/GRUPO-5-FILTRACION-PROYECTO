@@ -8,7 +8,7 @@
 
 ---
 
-## ROLES SCRUM 
+## 👥 ROLES SCRUM 
 
 
 
@@ -70,7 +70,7 @@
 **3. Limpiar espacios innecesarios.**
 
 ### Etiquetas: 
-**Validación, UX, Prioridad Media**
+**Validación, UX, 🔶Prioridad Media**
 
 ---
 
@@ -88,7 +88,8 @@
 
 **5. Input inválido (letras, símbolos)**
 
-**6. Etiquetas: Testing, QA, Prioridad Media**
+### Etiquetas: 
+**Testing, QA, 🔶Prioridad Media**
 
 ---
 
@@ -102,7 +103,8 @@
 
 **3. Código comentado**
 
-**4. Etiquetas: Documentación, Prioridad Baja**
+### Etiquetas: 
+**Documentación, 🔹Prioridad Baja**
 
 ---
 
@@ -144,12 +146,15 @@
 
 ---
 
-## LINK DE PAGINA WEB
+## 🔔 LINK DE PAGINA WEB
 
+[NUESTRO ENLACE WEB](https://jesseau.github.io/GRUPO-5-FILTRACION-PROYECTO)
 
 ---
 
-## LINK DE TRELLO
+## 🔑 LINK DE TRELLO
+
+[TABLERO TRELLO](https://trello.com/invite/b/6895233e1b5bd96c77c3577f/ATTI30194b12886af349c1f780eabf9ecd66C7915182/proyecto-grupo-5)
 
 
 
