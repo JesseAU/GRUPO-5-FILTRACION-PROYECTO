@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formNumeros');
     const input = document.getElementById('numeros');
     const acumularChk = document.getElementById('acumular');
@@ -78,4 +78,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // inicial
     actualizarUI();
-});
+// falta el cierre correcto aquí, para romper el código
