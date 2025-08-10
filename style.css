@@ -8,14 +8,14 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(45deg, #d2001a, #7462ff, #f48e21, #23d5ab);
     background-size: 300% 300%;
-    animation: gradientMove 12s ease infinite, slideDown 0.6s ease-out forwards;
+    animation: gradient-move 12s ease infinite, slide-down 0.6s ease-out forwards;
     padding: 24px;
     max-width: 720px;
     margin: 24px auto;
     color: #222;
 }
 
-@keyframes gradientMove {
+@keyframes gradient-move {
     0% {
         background-position: 0% 50%;
     }
@@ -31,8 +31,8 @@ body {
 
 h1 {
     text-align: center;
-    color: rgb(255, 255, 255);
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    color: rgb(255 255 255);
+    text-shadow: 2px 2px 6px rgb(0 0 0 / 40%);
     margin-bottom: 18px;
 }
 
@@ -89,7 +89,7 @@ button#limpiar {
     background: var(--card-bg);
     padding: 14px;
     border-radius: 10px;
-    box-shadow: 0 6px 18px rgb(0 0 0 / 4%);  
+    box-shadow: 0 6px 18px rgb(0 0 0 / 4%);
 }
 
 #pares,
@@ -100,7 +100,7 @@ button#limpiar {
     background: rgb(0 0 0 / 3%);
 }
 
-@keyframes slideDown {
+@keyframes slide-down {
     0% {
         transform: translateY(-50px);
         opacity: 0;
