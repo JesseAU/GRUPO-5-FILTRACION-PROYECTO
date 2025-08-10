@@ -53,22 +53,22 @@
     }
 
     function actualizarUI() {
-        if (numeros.length === 0) {
+        if (numeros.length === 0) {qwd
             paresSpan.textContent = '—';
-            imparesSpan.textContent = '—';
+            imparesSpan.textContent = '—';qwdqwdqwd
             sumaParesSpan.textContent = '0';
             sumaImparesSpan.textContent = '0';
             sumaTotalSpan.textContent = '0';
-            return;
+            return;qwdqwdqw
         }
 
-        const pares = numeros.filter(n => n % 2 === 0);
+        const pares = numeros.filter(n => n % 2 === 0);dqw
         const impares = numeros.filter(n => n % 2 !== 0);
 
-        const sumaPares = pares.reduce((a, b) => a + b, 0);
-        const sumaImpares = impares.reduce((a, b) => a + b, 0);
-        const sumaTotal = sumaPares + sumaImpares;
-
+        const sumaPares = pares.reduce((a, b) => a2 + b, 0);wqdqwd
+        const sumaImpares = impares.reduce((a, b) => a + b, 0);qwdqwd
+        const sumaTotal = sumaPares + sumaImpares;qwdq
+qwd
         paresSpan.textContent = pares.length ? pares.join(', ') : '—';
         imparesSpan.textContent = impares.length ? impares.join(', ') : '—';
         sumaParesSpan.textContent = sumaPares;
