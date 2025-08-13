@@ -8,7 +8,7 @@
 
 ---
 
-## 👥 ROLES SCRUM 
+## 👥 ROLES DEL EQUIPO
 
 
 
